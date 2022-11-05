@@ -6,13 +6,15 @@ var engine;
 var world;
 var particles = [];
 var plinkos = [];
-var cols = 12;
-var rows = 12;
+var bounds = [];
+var cols = 11;
+var rows = 10;
     
 function setup(){
-    createCanvas(600,800);
+    createCanvas(600,700);
     engine = Engine.create();
     world = engine.world;
+    world.gravity.y = 1;
     newParticle();
     var spacing = width / cols;
     for (var j = 0; j < rows; j++){
@@ -24,7 +26,16 @@ function setup(){
             plinkos.push(p)
         }
     }
-
+    var b = new Boundary(width/2, height + 50, width, 100);
+    bounds.push(b);
+    for (var i = 0; i < cols + 2; i++){
+        var x = i * spacing;
+        var h = 100;
+        var w = 10;
+        var y = height - h / 2
+        var b = new Boundary(x, y, w, h);
+        bounds.push(b);
+    }
 }
 
 function newParticle(){
@@ -39,10 +50,20 @@ function draw(){
     Engine.update(engine);
     for (var i = 0; i < particles.length; i++){
         particles[i].show();
+        if (particles[i].isOffScreen()){
+            World.remove(world, particles[i].body);
+            particles.splice(i, 1);
+            i--;
+        }
     }
 
     for (var i = 0; i < plinkos.length; i++){
         plinkos[i].show();
     }
+
+    for (var i = 0; i < bounds.length; i++){
+        bounds[i].show();
+    }
+
     
 }
