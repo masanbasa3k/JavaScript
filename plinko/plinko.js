@@ -11,6 +11,7 @@ function Plinko(x, y, r){
 }
 
 Plinko.prototype.show = function() {
+    noStroke();
     fill(0, 255, 0);
     stroke(255);
     var pos = this.body.position;

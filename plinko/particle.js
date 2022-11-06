@@ -3,7 +3,9 @@ function Particle(x, y, r){
         restitution: 1, 
         friction: 0
     }
+    x += random(-1, 1);
     this.body = Bodies.circle(x, y, r, options);
+    this.body.label = "particle";
     this.r = r;
     World.add(world, this.body);
 }
