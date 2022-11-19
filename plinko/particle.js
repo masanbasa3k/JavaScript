@@ -5,7 +5,7 @@ function Particle(x, y, r){
     }
     x += random(-1, 1);
     this.body = Bodies.circle(x, y, r, options);
-    this.body.label = "particle";
+    this.body.label = 'particle';
     this.r = r;
     World.add(world, this.body);
 }
@@ -16,8 +16,8 @@ Particle.prototype.isOffScreen = function(){
 }
 
 Particle.prototype.show = function() {
-    fill(255);//(255,255,0) yellow
-    stroke(255);
+    fill(100,200,300);//(255,255,0) yellow
+    stroke(0);
     var pos = this.body.position;
     push();
     translate(pos.x, pos.y);
