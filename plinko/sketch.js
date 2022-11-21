@@ -13,17 +13,12 @@ var cols = 9;
 var rows = 9;
 
 var ding;
+var bruh;
 function preload(){
-    ding = loadSound('sounds/bruh.mp3');
+    bruh = loadSound('sounds/bruh.mp3');
+    ding = loadSound('sounds/ding.mp3');
     plinkoBG = loadImage('dirt.png');
 }
-
-
-
-// function mousePressed(){
-//     ding.play();
-// }
-
 
 function setup(){
     canvas = createCanvas(500,650);
@@ -39,13 +34,22 @@ function setup(){
         for (var i = 0; i < pairs.length; i++){
             var labelA = pairs[i].bodyA.label;
             var labelB = pairs[i].bodyB.label;
-            if (labelA == 'touchy' && labelB == 'particle'){
+            
+            //particle to plinko
+            if (labelA == 'plinko' && labelB == 'particle'){
                 ding.play();
-                deleteParticle(i)
+            }
+            if (labelA == 'particle' && labelB == 'plinko'){
+                ding.play();
+            }
+            // //finish
+            if (labelA == 'touchy' && labelB == 'particle'){
+                bruh.play();
+                deleteParticle(pairs[i].bodyB);
             }
             if (labelA == 'particle' && labelB == 'touchy'){
-                ding.play();
-                deleteParticle(i)
+                bruh.play();
+                deleteParticle(pairs[i].bodyA);
             }
         }
     }
@@ -96,11 +100,10 @@ function newParticle(){// create particle function
     particles.push(p);
 }
 
-function deleteParticle(index){
-    World.remove(world, particles[index].body);
-    particles.splice(index, 1);
+function deleteParticle(body){
+    World.remove(world, body);
+    particles.splice(0, 1);
 }
-
 
 function draw(){
     // background(plinkoBG,[100]);//'transparent'
